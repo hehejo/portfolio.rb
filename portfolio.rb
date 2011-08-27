@@ -24,6 +24,10 @@ end
 # load the portfolio
 # @return [Array] an array of hashes with information about the portfolio
 def load_portfolio
+	unless File.exist?(PORTFOLIO)
+		puts "Portfolio configuration '#{PORTFOLIO}' doesn't exist."
+		exit
+	end
 	return YAML.load(File.read(PORTFOLIO))
 end
 
