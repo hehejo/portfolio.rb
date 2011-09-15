@@ -56,10 +56,10 @@ end
 # @parm portfolio the portfolio (array with hashes loaded from the dataset)
 def print_portfolio(portfolio = Array.new)
 	template=<<EOT
-STOCK:\tLASTTRADE
-\tAMOUNT @ PRICE -> PROFIT
+STOCK:\tLASTTRADE €
+\tAMOUNT @ PRICE € -> PROFIT €
 EOT
-	portfolio.each do |p|
+	money = portfolio.reduce(0) do |memo, p|
 		t = template.dup
 		t.sub!('STOCK', p['stock'])
 		t.sub!('LASTTRADE', "#{p['info'].lastTrade}")
@@ -67,7 +67,9 @@ EOT
 		t.sub!('PRICE', p['price'].to_s)
 		t.sub!('PROFIT', p['profit_amount'].to_s)
 		puts t
+		memo += p['profit_amount']
 	end
+	puts "-> #{money} €"
 end
 
 if __FILE__ == $0
