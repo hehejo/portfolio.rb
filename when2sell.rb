@@ -35,18 +35,19 @@ class When2Sell
 	def report
 rep=<<EOR
 Verkauf von %i Aktien bei Kurswert %.3f €:
+Kaufbetrag:  %8.3f €
+-----------------------
 Betrag:      %8.3f €
 Provision:   %8.3f €
 -----------------------
 Endbetrag:   %8.3f €
-Kaufbetrag:  %8.3f €
 
 EOR
 
 		betrag = __betrag(@kmin)
 		provision =  __provision(@kmin)
 		endbetrag = betrag - provision
-		puts rep % [@anzahl, @kmin, betrag, provision, endbetrag, @kaufbetrag]
+		puts rep % [@anzahl, @kmin, @kaufbetrag, betrag, provision, endbetrag]
 	end
 
 	private
