@@ -74,7 +74,8 @@ if __FILE__ == $0
 		options = {:amount => 100,
 		 	:kaufbetrag => 6501,
 		 	:provision => 0.25,
-			:prov_min => 9.90}
+			:prov_min => 9.90,
+			:savings => 100}
 
 		optparse = OptionParser.new do |opts|
 			opts.on('-a' , '--amount AMOUNT', Integer, 'set the amount of stocks') do |a|
@@ -92,16 +93,21 @@ if __FILE__ == $0
 			opts.on('-m' , '--min_provision PROVISION_MIN', Float, 'set the minumum provision in €') do |a|
 				options[:prov_min] = a
 			end
+
+			opts.on('-s' , '--savings SAVINGS', Float, 'set the amount of € to gain') do |a|
+				options[:savings] = a
+			end
 		end
 		optparse.parse!
-	
+
+
 	seller = When2Sell.new(options[:kaufbetrag],
 												 options[:amount],
 												 options[:provision],
 												 options[:prov_min])
 
 	seller.report
-	seller.sell_by_x_to_save(120)
+	seller.sell_by_x_to_save options[:savings]
 	seller.report
 end
 
